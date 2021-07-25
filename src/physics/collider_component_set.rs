@@ -17,8 +17,8 @@ impl IntoEntity for ColliderHandle {
     }
 }
 
-pub type QueryPipelineColliderComponentsQuery<'a, 'b> = Query<
-    'a,
+pub type QueryPipelineColliderComponentsQuery<'w, 's, 'b> = Query<
+    'w, 's,
     (
         Entity,
         &'b ColliderPosition,
@@ -27,8 +27,8 @@ pub type QueryPipelineColliderComponentsQuery<'a, 'b> = Query<
     ),
 >;
 
-pub struct QueryPipelineColliderComponentsSet<'a, 'b, 'c>(
-    pub &'c QueryPipelineColliderComponentsQuery<'a, 'b>,
+pub struct QueryPipelineColliderComponentsSet<'w, 's, 'b, 'c>(
+    pub &'c QueryPipelineColliderComponentsQuery<'w, 's, 'b>,
 );
 
 impl_component_set_wo_query_set!(
@@ -43,11 +43,11 @@ impl_component_set_wo_query_set!(QueryPipelineColliderComponentsSet, ColliderFla
     data.3
 });
 
-pub struct ColliderComponentsSet<'a, 'b, 'c>(pub ColliderComponentsQuery<'a, 'b, 'c>);
+pub struct ColliderComponentsSet<'w, 's, 'b, 'c>(pub ColliderComponentsQuery<'w, 's, 'b, 'c>);
 
-pub type ColliderComponentsQuery<'a, 'b, 'c> = QuerySet<(
+pub type ColliderComponentsQuery<'w, 's, 'b, 'c> = QuerySet<(
     Query<
-        'a,
+        'w, 's,
         (
             Entity,
             &'b ColliderChanges,
@@ -61,7 +61,7 @@ pub type ColliderComponentsQuery<'a, 'b, 'c> = QuerySet<(
         ),
     >,
     Query<
-        'a,
+        'w, 's,
         (
             Entity,
             &'c mut ColliderChanges,
@@ -70,7 +70,7 @@ pub type ColliderComponentsQuery<'a, 'b, 'c> = QuerySet<(
         ),
     >,
     Query<
-        'a,
+        'w, 's,
         (
             Entity,
             &'c mut ColliderChanges,
