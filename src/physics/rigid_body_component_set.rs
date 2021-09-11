@@ -21,9 +21,9 @@ impl IntoEntity for RigidBodyHandle {
     }
 }
 
-pub type RigidBodyComponentsQuery<'a, 'b, 'c> = QuerySet<(
+pub type RigidBodyComponentsQuery<'w, 's, 'b, 'c> = QuerySet<(
     Query<
-        'a,
+        'w, 's,
         (
             Entity,
             &'b RigidBodyPosition,
@@ -41,7 +41,7 @@ pub type RigidBodyComponentsQuery<'a, 'b, 'c> = QuerySet<(
         ),
     >,
     Query<
-        'a,
+        'w, 's,
         (
             Entity,
             &'c mut RigidBodyPosition,
@@ -57,7 +57,7 @@ pub type RigidBodyComponentsQuery<'a, 'b, 'c> = QuerySet<(
         ),
     >,
     Query<
-        'a,
+        'w, 's,
         (
             Entity,
             &'c mut RigidBodyChanges,
@@ -84,13 +84,13 @@ pub type RigidBodyComponentsQuery<'a, 'b, 'c> = QuerySet<(
         )>,
     >,
     Query<
-        'a,
+        'w, 's,
         &'c mut RigidBodyChanges,
         Or<(Changed<RigidBodyActivation>, Added<RigidBodyActivation>)>,
     >,
 )>;
 
-pub struct RigidBodyComponentsSet<'a, 'b, 'c>(pub RigidBodyComponentsQuery<'a, 'b, 'c>);
+pub struct RigidBodyComponentsSet<'w, 's, 'b, 'c>(pub RigidBodyComponentsQuery<'w, 's, 'b, 'c>);
 
 impl_component_set_mut!(RigidBodyComponentsSet, RigidBodyPosition, |data| data.1);
 impl_component_set_mut!(RigidBodyComponentsSet, RigidBodyVelocity, |data| data.2);
